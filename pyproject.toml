@@ -1,0 +1,13 @@
+[project]
+name = "dungeon"
+version = "0.1.0"
+description = "CSCI 3500C semester project: a dungeon that grows into a cloud service"
+requires-python = ">=3.12"
+dependencies = []
+
+[dependency-groups]
+dev = ["pytest>=8.0"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]

@@ -1,0 +1,39 @@
+{
+  "name": "Dungeon (CSCI 3500C)",
+  "image": "mcr.microsoft.com/devcontainers/python:3.12",
+
+  // 2 cores is deliberate. Codespaces bills CORE-hours, so a 4-core machine
+  // burns your monthly quota twice as fast. 2 cores is plenty for this
+  // project and keeps everyone comfortably inside the free allowance.
+  "hostRequirements": {
+    "cpus": 2
+  },
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance"
+      ],
+      "settings": {
+        "python.testing.pytestEnabled": true,
+        "python.testing.pytestArgs": ["tests"],
+        "editor.formatOnSave": false,
+        "terminal.integrated.defaultProfile.linux": "bash"
+      }
+    }
+  },
+
+  // Runs once when the codespace is built. After this, `pytest` just works.
+  "postCreateCommand": "pip install --user pytest",
+
+  // Week 4: when you start the web version, this port pops up as a
+  // clickable URL that anyone you share it with can open.
+  "forwardPorts": [8000],
+  "portsAttributes": {
+    "8000": {
+      "label": "Dungeon web server",
+      "onAutoForward": "notify"
+    }
+  }
+}
