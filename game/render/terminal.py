@@ -37,7 +37,7 @@ class TerminalRenderer(Renderer):
 
     def get_command(self) -> str | None:
         try:
-            return input("> ").strip().lower()
+            return input("> ").lower()
         except EOFError:
             # Input ran out (piped input, or Ctrl-D). Treat it as quitting.
             return "q"

@@ -9,7 +9,7 @@ The class hierarchy here is the backbone of the whole project:
 Add your own subclasses below. Anything that inherits from Entity is
 automatically picked up by World.step() -- you never have to register it.
 """
-
+import random
 
 class Entity:
     """Something standing on a square of the dungeon."""
@@ -101,7 +101,44 @@ class Monster(Entity):
     def __init__(self, x: int, y: int, symbol: str = "g", name: str = "goblin") -> None:
         super().__init__(x, y, symbol=symbol, name=name)
         self.hp = 5
+        self.vision_area = 5
+        self.damage = 3
+        self.stunned_turns = 0
+
 
     def act(self, world) -> None:
-        # TODO(week 2): make the monster do something.
-        return None
+        if not(self.stunned_turns):
+            for i in world.entities:
+                if i.name == "you":
+                    player = i 
+
+            enemy_possible_moves = [[-1, 0], [0, 0], [1, 0], [0, 1], [0, -1]]
+
+            dx, dy = random.choice(enemy_possible_moves)
+
+            distance = abs(player.x - self.x) + abs(player.y - self.y)
+            print(distance)
+            if distance < self.vision_area and distance != 1:
+                print(self.name, "sees you, RUN AWAY!")
+                dx = 0
+                if player.x - self.x > 0:
+                    dx = 1
+                elif player.x - self.x < 0:
+                    dx = -1
+
+                dy = 0 
+                if player.y - self.y > 0:
+                    dy = 1
+                elif player.y - self.y < 0:
+                    dy = -1
+
+            elif distance == 1:
+                player.hp -= self.damage
+                self.stunned_turns = 3
+            self.move_by(world, dx, dy)
+
+        else:
+            self.stunned_turns -= 1
+
+        
+
